@@ -12,9 +12,8 @@ cite_startNós construímos esta solução dividida em dois aplicativos compleme
 Na linha de produção, a inspeção visual de peças muitas vezes sofre com lentidão, gargalos e falta de padronização. Operadores precisam de respostas em tempo real, enquanto inspetores necessitam de dados consolidados para tomar decisões rápidas sobre manutenção e ajustes de maquinário.
 
 ### 👥 Público-Alvo
-Nossa solução atende a dois perfis cruciais na operação:
-1. **O Operador (Chão de Fábrica):** Precisa de extrema agilidade, zero atrito e respostas em milissegundos sem depender de conexão constante com a internet
-2. **O Inspetor (Gestão/Qualidade):** Focado em análise de métricas, gestão do pátio e emissão rápida de laudos técnicos padronizados.
+1. **O Inspetor (Gestão/Qualidade):**
+Precisa de extrema agilidade, zero atrito e respostas em milissegundos para que todo o processo de "SCAN" seja perfeito. Focado em análise de métricas, gestão do pátio e emissão rápida de laudos técnicos padronizados.
 
 ### 🚀 Nosso Objetivo
 Criar um fluxo contínuo onde a captura de uma imagem pelo Operador seja processada instantaneamente por um modelo de IA local (Teachable Machine). Caso uma anomalia seja detectada, o Inspetor recebe os dados estruturados e utiliza IA Generativa (Google Gemini) para gerar um laudo automático e disparar ordens de manutenção com um único clique.
@@ -23,14 +22,14 @@ Criar um fluxo contínuo onde a captura de uma imagem pelo Operador seja process
 
 ## 📱 Os Aplicativos
 
-### 1️⃣ APP 1: Sidera Predict - Operador (Mobile)
+### 1️⃣ APP 1: Sidera Predict - Leitor (Mobile)
 Focado em velocidade e simplicidade no ambiente de produção.
-* **Login Rápido:** Acesso via leitura de crachá (câmera) e PIN numérico.
+* **Login Rápido:** Acesso via leitura de crachá (câmera) ou email e senha.
 * **Setup de Turno:** Seleção da Área e Máquina de trabalho.
 * **Câmera Inteligente:** Guias visuais e giroscópio para garantir o ângulo perfeito (paralelo à peça) antes da captura.
 * **Veredito em Milissegundos:** O modelo TFLite embarcado avalia a foto e colore a tela por 3 segundos (Verde = Aprovada, Vermelho = Anomalia, Laranja = Falha/Tentar Novamente).
 
-### 2️⃣ APP 2: Sidera Predict - Inspetor (Híbrido Web/Mobile)
+### 2️⃣ APP 2: Sidera Predict - Gerenciamento (Híbrido Web/Mobile)
 O centro de comando para gestão de qualidade.
 * **Dashboard de KPIs:** Gráficos de defeitos, ranking de gargalos por máquina, volume de leitura e latência da IA.
 * **Raio-X da Inspeção:** Visualização detalhada da peça reprovada com as predições brutas do modelo.
@@ -43,7 +42,7 @@ O centro de comando para gestão de qualidade.
 
 * **Frontend/Mobile:** Flutter (Dart) para criação da interface do Operador e do Inspetor.
 * **Inteligência Artificial (Local):** Google Teachable Machine exportado em formato TFLite para rodar offline no celular.
-* **Inteligência Artificial (Nuvem):** API do Google Gemini para cruzamento de dados e geração de laudos em linguagem natural.
+* **Inteligência Artificial (Nuvem):** API do Google Gemini ou localmente hospedada (Ollama) para cruzamento de dados e geração de laudos em linguagem natural.
 
 ---
 
