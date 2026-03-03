@@ -10,6 +10,7 @@ Closes #
 - [ ] 📚 Documentação (Atualização de RF, RNF, RN ou Relatórios)
 - [ ] 🔨 Refatoração (Melhoria de código já existente)
 - [ ] ⚙️ Configuração / Infra / Dependências
+- [ ] 🔬 Teste / Estudo Técnico
 
 ## ✅ Checklist
 - [ ] O código segue os padrões definidos para o projeto.
