@@ -20,14 +20,6 @@ Criar um fluxo contínuo onde a captura de uma imagem pelo Operador seja process
 
 ---
 
-## 📱 Os Aplicativos
-
-Com certeza, João. Ajustei o texto para refletir que se trata de uma aplicação única, simplificando o fluxo e removendo a etapa de login conforme você solicitou. O foco agora está totalmente na agilidade do inspetor de qualidade no chão de fábrica.
-
-Aqui está a versão atualizada para o seu **README**:
-
----
-
 ## 🛠️ Sidera Predict (SOUFER) - Mobile App
 
 Uma solução integrada de visão computacional e gestão de qualidade, projetada para otimizar a inspeção técnica e a tomada de decisão no ambiente industrial.
