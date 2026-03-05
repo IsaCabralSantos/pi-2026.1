@@ -56,7 +56,7 @@ Transforma os dados coletados em ações estratégicas de manutenção e qualida
 
 Nós organizamos nosso repositório para manter a documentação e o código sempre alinhados:
 
-* `/docs/`: Contém todos os nossos Requisitos Funcionais (`RF.md`), Não Funcionais (`RNF.md`) e Regras de Negócio (`RN.md`).
+* `/docs/`: Contém todos os nossos Requisitos Funcionais (`RF.md`), Não Funcionais (`RNF.md`), Regras de Negócio (`RN.md`), BackLog (`BACKLOG.md`) e Casos de Uso (`UC.md`).
 * `/.github/`: Contém os nossos templates de Pull Request e Issues para padronizar o desenvolvimento da equipe.
 
 ---
