@@ -56,8 +56,23 @@ Transforma os dados coletados em ações estratégicas de manutenção e qualida
 
 Nós organizamos nosso repositório para manter a documentação e o código sempre alinhados:
 
-* `/docs/`: Contém todos os nossos Requisitos Funcionais (`RF.md`), Não Funcionais (`RNF.md`), Regras de Negócio (`RN.md`), BackLog (`BACKLOG.md`) e Casos de Uso (`UC.md`).
-* `/.github/`: Contém os nossos templates de Pull Request e Issues para padronizar o desenvolvimento da equipe.
+* `/docs/`: Central de documentação oficial. Contém:
+	* `BACKLOG.MD`: Visão macro (Épicos e Histórias de Usuário)
+	* `RF.MD`: Requisitos Funcionais
+	* `RN.MD`: Regras de Negócio
+	* `RNF.MD`: Requisitos Não Funcionais
+	* `UC.md`: Casos de Uso
+* `/.github/`: Templates de Pull Request e Issues para padronizar o desenvolvimento da equipe.
+
+---
+
+## 📚 Documentação e Padronização
+
+Todos os documentos, código e comunicação do projeto devem utilizar os mesmos termos e definições. Sempre relacione requisitos, regras e casos de uso entre si usando suas siglas e numerações oficiais (ex: RF01, RN02, UC03).
+
+Sempre que um documento for alterado, atualize os relacionamentos nos demais arquivos.
+
+> **Importante:** A padronização é obrigatória para garantir clareza, rastreabilidade e colaboração eficiente.
 
 ---
 

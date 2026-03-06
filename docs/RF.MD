@@ -1,3 +1,4 @@
+
 ## Requisitos Funcionais (RF)
 
 * **RF01 - Acesso Direto:** O aplicativo deve permitir o acesso imediato à tela principal de inspeção sem a necessidade de autenticação (login/senha).

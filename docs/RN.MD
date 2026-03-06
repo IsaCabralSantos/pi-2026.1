@@ -1,3 +1,4 @@
+
 ### Regras de Negócio (RN)
 
 * **RN01 - Classificação Tripla Exclusiva:** Toda inspeção submetida ao modelo deve, obrigatoriamente, resultar em apenas um dos três estados possíveis: Aprovado, Anomalia Detectada ou Falha de Leitura.
