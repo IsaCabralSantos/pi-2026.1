@@ -1,3 +1,4 @@
+
 # Casos de Uso do Sistema: SIDERA PREDICT
 
 ## UC01 — Realizar Inspeção de Peça (SCAN)
