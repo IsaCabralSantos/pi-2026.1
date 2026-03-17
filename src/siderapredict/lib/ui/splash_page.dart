@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:siderapredict/ui/dashboard_relatorios.dart';
+import 'package:siderapredict/ui/menu_principal.dart';
 
 class SplashPage extends StatefulWidget {
   const SplashPage({super.key});
@@ -19,7 +19,7 @@ class _SplashPageState extends State<SplashPage> {
     await Future.delayed(const Duration(milliseconds: 1500));
     if (!mounted) return;
     Navigator.of(context).pushReplacement(
-      MaterialPageRoute(builder: (context) => const DashboardRelatoriosPage()),
+      MaterialPageRoute(builder: (context) => const MenuPrincipalPage()),
     );
   }
 

@@ -1,6 +1,9 @@
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 
+import 'analise_scanner.dart';
+import 'theme.dart';
+
 class ScannerPage extends StatefulWidget {
   const ScannerPage({super.key});
 
@@ -88,9 +91,9 @@ class _ScannerPageState extends State<ScannerPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.black,
+      backgroundColor: blackColor,
       appBar: AppBar(
-        backgroundColor: Colors.red,
+        backgroundColor: primaryColor,
         elevation: 0,
         leading: IconButton(
           icon: const Icon(Icons.arrow_back, color: Colors.white),
@@ -137,7 +140,7 @@ class _ScannerPageState extends State<ScannerPage> {
                       } else {
                         return const Center(
                           child: CircularProgressIndicator(
-                            color: Colors.red,
+                            color: primaryColor,
                           ),
                         );
                       }
@@ -145,7 +148,7 @@ class _ScannerPageState extends State<ScannerPage> {
                   )
                 : const Center(
                     child: CircularProgressIndicator(
-                      color: Colors.red,
+                      color: primaryColor,
                     ),
                   ),
           ),
@@ -161,8 +164,9 @@ class _ScannerPageState extends State<ScannerPage> {
                   FloatingActionButton(
                     heroTag: 'flash',
                     backgroundColor: Colors.white,
+                    elevation: 6,
                     onPressed: _toggleFlash,
-                    child: Icon(_getFlashIcon(), color: Colors.red),
+                    child: Icon(_getFlashIcon(), color: primaryColor),
                   ),
                   Expanded(
                     child: Padding(
@@ -171,13 +175,34 @@ class _ScannerPageState extends State<ScannerPage> {
                         height: 56,
                         child: ElevatedButton(
                           style: ElevatedButton.styleFrom(
-                            backgroundColor: Colors.red,
+                            backgroundColor: primaryColor,
+                            elevation: 6,
+                            shadowColor: blackColor.withOpacity(0.25),
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(12),
                             ),
-                            elevation: 2,
                           ),
-                          onPressed: () {},
+                          onPressed: () async {
+                            try {
+                              if (_initializeControllerFuture != null) {
+                                await _initializeControllerFuture;
+                              }
+                              if (_controller == null) return;
+                              final picture = await _controller!.takePicture();
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => AnaliseScanner(
+                                    imagePath: picture.path,
+                                  ),
+                                ),
+                              );
+                            } catch (e) {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(content: Text('Erro ao capturar: $e')),
+                              );
+                            }
+                          },
                           child: const Text(
                             'ESCANEAR PEÇA',
                             style: TextStyle(

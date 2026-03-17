@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import 'diagnostico_detalhe_page.dart';
 
 class DiagnosticosPage extends StatelessWidget {
@@ -11,14 +12,12 @@ class DiagnosticosPage extends StatelessWidget {
       body: SafeArea(
         child: Column(
           children: [
-
             Container(
               width: double.infinity,
               padding: const EdgeInsets.symmetric(vertical: 20),
               color: const Color(0xFFDE1212),
               child: Row(
                 children: [
-
                   IconButton(
                     icon: const Icon(Icons.arrow_back, color: Colors.white),
                     onPressed: () => Navigator.pop(context),
@@ -65,12 +64,11 @@ class DiagnosticosPage extends StatelessWidget {
                       color: Colors.black.withOpacity(0.15),
                       blurRadius: 6,
                       offset: const Offset(0, 4),
-                    )
+                    ),
                   ],
                 ),
                 child: Row(
                   children: [
-
                     Container(
                       width: 90,
                       height: 90,
@@ -89,7 +87,6 @@ class DiagnosticosPage extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-
                         Text(
                           "Solicitação #00001",
                           style: TextStyle(
@@ -115,11 +112,11 @@ class DiagnosticosPage extends StatelessWidget {
                           ),
                         ),
                       ],
-                    )
+                    ),
                   ],
                 ),
               ),
-            )
+            ),
           ],
         ),
       ),

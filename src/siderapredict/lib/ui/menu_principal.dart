@@ -1,28 +1,34 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+
+import 'dashboard_relatorios.dart';
 import 'diagnosticos_page.dart';
+import 'scanner.dart';
+import 'theme.dart';
 
 class MenuPrincipalPage extends StatelessWidget {
   const MenuPrincipalPage({super.key});
 
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(statusBarColor: primaryColor, statusBarIconBrightness: Brightness.light));
     return Scaffold(
-      backgroundColor: const Color(0xFFF4F6F8),
+      backgroundColor: backgroundLight,
       body: SafeArea(
         child: Column(
           children: [
-
             Container(
               width: double.infinity,
               padding: const EdgeInsets.symmetric(vertical: 24),
-              color: const Color(0xFFDE1212),
-              child: const Center(
+              color: primaryColor,
+              child: Center(
                 child: Text(
                   "Menu Principal",
                   style: TextStyle(
-                    color: Colors.white,
+                    color: whiteColor,
                     fontSize: 22,
                     fontWeight: FontWeight.bold,
+                    shadows: textShadows,
                   ),
                 ),
               ),
@@ -30,12 +36,13 @@ class MenuPrincipalPage extends StatelessWidget {
 
             const SizedBox(height: 40),
 
-            const SizedBox(
+            SizedBox(
               width: 370,
               height: 165,
               child: MenuCard(
                 icon: Icons.camera_alt_outlined,
                 title: "NOVA INSPEÇÃO",
+                page: ScannerPage(),
               ),
             ),
 
@@ -44,7 +51,6 @@ class MenuPrincipalPage extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-
                 SizedBox(
                   width: 175,
                   height: 165,
@@ -57,12 +63,13 @@ class MenuPrincipalPage extends StatelessWidget {
 
                 const SizedBox(width: 20),
 
-                const SizedBox(
+                SizedBox(
                   width: 175,
                   height: 165,
                   child: MenuCard(
                     icon: Icons.bar_chart_outlined,
                     title: "RELATÓRIOS",
+                    page: DashboardRelatoriosPage(),
                   ),
                 ),
               ],
@@ -101,32 +108,26 @@ class MenuCard extends StatelessWidget {
         decoration: BoxDecoration(
           color: const Color(0xFFFFFFFF),
           borderRadius: BorderRadius.circular(20),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black.withOpacity(0.1),
-              blurRadius: 8,
-              offset: const Offset(0, 4),
-            ),
-          ],
+          boxShadow: subtleShadows,
         ),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-
             Icon(
               icon,
               size: 40,
-              color: const Color(0xFF1A1A1A),
+              color: darkTextColor,
             ),
 
             const SizedBox(height: 12),
 
             Text(
               title,
-              style: const TextStyle(
-                color: Color(0xFF1A1A1A),
+              style: TextStyle(
+                color: darkTextColor,
                 fontWeight: FontWeight.bold,
                 fontSize: 16,
+                shadows: textShadows,
               ),
             ),
           ],
