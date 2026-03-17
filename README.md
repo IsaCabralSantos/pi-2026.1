@@ -2,7 +2,7 @@
 
 Repositório do **SIDERA PREDICT**, um ecossistema inteligente para inspeção de peças e gestão de qualidade no chão de fábrica. 
 
-cite_startNós construímos esta solução dividida em dois aplicativos complementares, unindo Visão Computacional local e Inteligência Artificial Generativa para transformar a maneira como anomalias são detectadas e tratadas.
+Nós construímos esta solução dividida em dois aplicativos complementares, unindo Visão Computacional local e Inteligência Artificial Generativa para transformar a maneira como anomalias são detectadas e tratadas.
 
 ---
 
