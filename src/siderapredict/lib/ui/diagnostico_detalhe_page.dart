@@ -16,7 +16,7 @@ class DiagnosticoDetalhePage extends StatelessWidget {
             color: Colors.black.withOpacity(0.15),
             blurRadius: 6,
             offset: const Offset(0, 4),
-          )
+          ),
         ],
       ),
       child: Row(
@@ -25,7 +25,7 @@ class DiagnosticoDetalhePage extends StatelessWidget {
             "$titulo: ",
             style: const TextStyle(fontWeight: FontWeight.bold),
           ),
-          Expanded(child: Text(valor))
+          Expanded(child: Text(valor)),
         ],
       ),
     );
@@ -38,14 +38,12 @@ class DiagnosticoDetalhePage extends StatelessWidget {
       body: SafeArea(
         child: Column(
           children: [
-
             Container(
               width: double.infinity,
               padding: const EdgeInsets.symmetric(vertical: 20),
               color: const Color(0xFFDE1212),
               child: Row(
                 children: [
-
                   IconButton(
                     icon: const Icon(Icons.arrow_back, color: Colors.white),
                     onPressed: () => Navigator.pop(context),

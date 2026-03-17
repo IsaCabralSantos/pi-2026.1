@@ -1,148 +1,145 @@
-import 'package:camera/camera.dart';
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 
 import 'envio_solicitacao.dart';
+import 'theme.dart';
 
-class AnaliseScanner extends StatefulWidget {
-  const AnaliseScanner({super.key});
+class AnaliseScanner extends StatelessWidget {
+  final String imagePath;
 
-  @override
-  State<AnaliseScanner> createState() => _AnaliseScannerState();
-}
+  const AnaliseScanner({super.key, required this.imagePath});
 
-class _AnaliseScannerState extends State<AnaliseScanner> {
-  CameraController? _cameraController;
-  String _statusText = 'Enquadre a peça corretamente';
-  Color _statusColor = Colors.orange;
-
-  @override
-  void initState() {
-    super.initState();
-    _initCamera();
-  }
-
-  Future<void> _initCamera() async {
-    try {
-      final cameras = await availableCameras();
-      final backCamera = cameras.firstWhere(
-        (c) => c.lensDirection == CameraLensDirection.back,
-        orElse: () => cameras.first,
-      );
-
-      _cameraController = CameraController(backCamera, ResolutionPreset.high);
-
-      await _cameraController!.initialize();
-
-      if (!mounted) return;
-      setState(() {});
-    } catch (e) {
-      setState(() {
-        _statusText = 'Erro ao abrir câmera';
-        _statusColor = Colors.red;
-      });
-    }
-  }
-
-  Future<void> _simularAnalise() async {
-    if (_cameraController == null || !_cameraController!.value.isInitialized) {
-      return;
-    }
-
-    try {
-      await _cameraController!.takePicture();
-      await Future.delayed(const Duration(seconds: 2));
-
-      final resultados = [
-        ('PEÇA APROVADA', Colors.green),
-        ('ANOMALIA DETECTADA\n(Trincas visíveis)', Colors.red),
-        ('FALHA NA LEITURA\nAjuste o ângulo', Colors.orange),
-      ];
-
-      final resultado = resultados[DateTime.now().millisecond % 3];
-
-      if (!mounted) return;
-      setState(() {
-        _statusText = resultado.$1;
-        _statusColor = resultado.$2;
-      });
-
-      if (_statusColor == Colors.red && mounted) {
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (_) =>
-                const EnvioSolicitacao(anomalia: 'Trincas na superfície'),
-          ),
-        );
-      }
-    } catch (e) {
-      setState(() {
-        _statusText = 'Erro durante análise';
-        _statusColor = Colors.red;
-      });
-    }
-  }
-
-  @override
-  void dispose() {
-    _cameraController?.dispose();
-    super.dispose();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.black,
-      body: Stack(
-        fit: StackFit.expand,
+  Widget _infoCard(String title, String value) {
+    return Container(
+      margin: const EdgeInsets.symmetric(vertical: 8.0),
+      padding: const EdgeInsets.all(14.0),
+      decoration: BoxDecoration(
+        color: whiteColor,
+        borderRadius: BorderRadius.circular(12),
+        boxShadow: subtleShadows,
+      ),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          if (_cameraController != null &&
-              _cameraController!.value.isInitialized)
-            CameraPreview(_cameraController!)
-          else
-            const Center(
-              child: CircularProgressIndicator(color: Colors.white),
-            ),
-
-          Center(
-            child: Container(
-              width: 280,
-              height: 280,
-              decoration: BoxDecoration(
-                border: Border.all(color: Colors.green, width: 6),
-                borderRadius: BorderRadius.circular(20),
-              ),
-            ),
-          ),
-
-          Align(
-            alignment: Alignment.bottomCenter,
-            child: Container(
-              width: double.infinity,
-              padding: const EdgeInsets.all(24),
-              color: _statusColor.withValues(alpha: 0.92),
-              child: Text(
-                _statusText,
+          Expanded(
+            child: RichText(
+              text: TextSpan(
                 style: const TextStyle(
-                  color: Colors.white,
-                  fontSize: 28,
-                  fontWeight: FontWeight.bold,
+                  color: darkTextColor,
+                  fontSize: 16,
+                  shadows: textShadows,
                 ),
-                textAlign: TextAlign.center,
+                children: [
+                  TextSpan(
+                    text: '$title: ',
+                    style: const TextStyle(
+                      fontWeight: FontWeight.bold,
+                      shadows: textShadows,
+                    ),
+                  ),
+                  TextSpan(
+                    text: value,
+                    style: const TextStyle(shadows: textShadows),
+                  ),
+                ],
               ),
             ),
           ),
         ],
       ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-      floatingActionButton: Padding(
-        padding: const EdgeInsets.only(bottom: 100),
-        child: FloatingActionButton.extended(
-          backgroundColor: _statusColor,
-          foregroundColor: Colors.white,
-          icon: const Icon(Icons.camera_alt),
-          label: const Text('ANALISAR PEÇA'),
-          onPressed: _simularAnalise,
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: backgroundLighter,
+      appBar: AppBar(
+        backgroundColor: primaryColor,
+        elevation: 0,
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back, color: Colors.white),
+          onPressed: () => Navigator.of(context).pop(),
+        ),
+        title: const Text(
+          'Resultado da Análise',
+          style: TextStyle(color: Colors.white, shadows: textShadows),
+        ),
+        centerTitle: true,
+        toolbarHeight: 80,
+      ),
+      body: SingleChildScrollView(
+        padding: const EdgeInsets.fromLTRB(16, 18, 16, 24),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            _infoCard('Falha detectada', 'Trinca Térmica'),
+            _infoCard('Confiabilidade', '95%'),
+            _infoCard('Possível causa', 'Excesso de Calor'),
+            _infoCard('Ajuste Recomendado', 'Reduzir pressão em 9%'),
+            const SizedBox(height: 12),
+            Container(
+              padding: const EdgeInsets.all(12),
+              decoration: BoxDecoration(
+                color: whiteColor,
+                borderRadius: BorderRadius.circular(12),
+                boxShadow: subtleShadows,
+              ),
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(8),
+                child: AspectRatio(
+                  aspectRatio: 1,
+                  child: imagePath.isNotEmpty
+                      ? Image.file(
+                          File(imagePath),
+                          fit: BoxFit.cover,
+                        )
+                      : const Center(child: Text('Nenhuma imagem')),
+                ),
+              ),
+            ),
+            const SizedBox(height: 18),
+            SizedBox(
+              height: 56,
+              child: ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: primaryColor,
+                  elevation: 6,
+                  shadowColor: blackColor.withOpacity(0.25),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                ),
+                onPressed: () {
+                  final now = DateTime.now();
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (_) => EnvioSolicitacaoPage(
+                        requestId: '#00001',
+                        dateTime: now,
+                        detectedFault: 'Trinca Térmica',
+                        confidence: '95%',
+                        possibleCause: 'Excesso de Calor',
+                        recommendedAdjustment: 'Reduzir pressão em 9%',
+                        sectionMachine: 'F1 - Máquina 23',
+                        imagePath: imagePath,
+                      ),
+                    ),
+                  );
+                },
+                child: const Text(
+                  'GERAR SOLICITAÇÃO',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 16,
+                    shadows: textShadows,
+                  ),
+                ),
+              ),
+            ),
+          ],
         ),
       ),
     );
