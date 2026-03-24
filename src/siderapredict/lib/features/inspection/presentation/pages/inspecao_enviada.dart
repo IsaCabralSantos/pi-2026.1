@@ -5,32 +5,16 @@ import 'package:path_provider/path_provider.dart';
 import 'package:pdf/widgets.dart' as pw;
 import 'package:printing/printing.dart';
 
-import 'menu_principal.dart';
-import 'scanner.dart';
-import 'theme.dart';
+import '../../../../app/routes/app_routes.dart';
+import '../../../../core/theme/theme.dart';
+import '../../../../domain/models/inspection_request.dart';
 
 class InspecaoEnviadaPage extends StatelessWidget {
-  final String requestId;
-  final DateTime dateTime;
-  final String detectedFault;
-  final String confidence;
-  final String possibleCause;
-  final String recommendedAdjustment;
-  final String sectionMachine;
-  final String imagePath;
-  final String observations;
+  final InspectionRequest request;
 
   const InspecaoEnviadaPage({
     super.key,
-    required this.requestId,
-    required this.dateTime,
-    required this.detectedFault,
-    required this.confidence,
-    required this.possibleCause,
-    required this.recommendedAdjustment,
-    required this.sectionMachine,
-    required this.imagePath,
-    required this.observations,
+    required this.request,
   });
 
   Future<void> _generateAndSharePdf(BuildContext context) async {
@@ -40,9 +24,9 @@ class InspecaoEnviadaPage extends StatelessWidget {
     final doc = pw.Document();
 
     pw.ImageProvider? img;
-    if (imagePath.isNotEmpty) {
+    if (request.imagePath.isNotEmpty) {
       try {
-        final bytes = await File(imagePath).readAsBytes();
+        final bytes = await File(request.imagePath).readAsBytes();
         img = pw.MemoryImage(bytes);
       } catch (_) {
         img = null;
@@ -59,18 +43,18 @@ class InspecaoEnviadaPage extends StatelessWidget {
               style: pw.TextStyle(fontSize: 18, fontWeight: pw.FontWeight.bold),
             ),
             pw.SizedBox(height: 8),
-            pw.Text('Número: $requestId'),
-            pw.Text('Data: ${dateTime.toLocal()}'),
+            pw.Text('Número: ${request.requestId}'),
+            pw.Text('Data: ${request.dateTime.toLocal()}'),
             pw.SizedBox(height: 8),
-            pw.Text('Falha detectada: $detectedFault'),
-            pw.Text('Confiabilidade: $confidence'),
+            pw.Text('Falha detectada: ${request.detectedFault}'),
+            pw.Text('Confiabilidade: ${request.confidence}'),
             pw.SizedBox(height: 8),
-            pw.Text('Possível causa: $possibleCause'),
-            pw.Text('Ajuste recomendado: $recommendedAdjustment'),
-            pw.Text('Seção / Máquina: $sectionMachine'),
+            pw.Text('Possível causa: ${request.possibleCause}'),
+            pw.Text('Ajuste recomendado: ${request.recommendedAdjustment}'),
+            pw.Text('Seção / Máquina: ${request.sectionMachine}'),
             pw.SizedBox(height: 8),
             pw.Text('Observações:'),
-            pw.Text(observations),
+            pw.Text(request.observations),
             if (img != null) pw.SizedBox(height: 12),
             if (img != null)
               pw.Center(child: pw.Image(img, width: 250, height: 250)),
@@ -84,7 +68,7 @@ class InspecaoEnviadaPage extends StatelessWidget {
     // Save to app documents directory so user has a local copy (Download-like)
     try {
       final dir = await getApplicationDocumentsDirectory();
-      final file = File('${dir.path}/solicitacao_$requestId.pdf');
+      final file = File('${dir.path}/solicitacao_${request.requestId}.pdf');
       await file.writeAsBytes(bytes);
       messenger.showSnackBar(
         SnackBar(content: Text('PDF salvo em: ${file.path}')),
@@ -96,7 +80,7 @@ class InspecaoEnviadaPage extends StatelessWidget {
     // Open share/print sheet so user can save/export the PDF
     await Printing.sharePdf(
       bytes: bytes,
-      filename: 'solicitacao_$requestId.pdf',
+      filename: 'solicitacao_${request.requestId}.pdf',
     );
   }
 
@@ -148,7 +132,7 @@ class InspecaoEnviadaPage extends StatelessWidget {
                           ),
                           const SizedBox(height: 8),
                           Text(
-                            'Número da Solicitação #$requestId',
+                            'Número da Solicitação ${request.requestId}',
                             style: const TextStyle(fontWeight: FontWeight.bold),
                           ),
                           const SizedBox(height: 18),
@@ -188,9 +172,8 @@ class InspecaoEnviadaPage extends StatelessWidget {
                     ),
                   ),
                   onPressed: () {
-                    Navigator.pushReplacement(
-                      context,
-                      MaterialPageRoute(builder: (_) => ScannerPage()),
+                    Navigator.of(context).pushReplacementNamed(
+                      AppRoutes.scanner,
                     );
                   },
                   child: const Text(
@@ -207,18 +190,15 @@ class InspecaoEnviadaPage extends StatelessWidget {
                 height: 52,
                 child: ElevatedButton(
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: const Color(0xFFDE1212),
+                    backgroundColor: primaryColor,
                     foregroundColor: Colors.white,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(10),
                     ),
                   ),
                   onPressed: () {
-                    Navigator.pushAndRemoveUntil(
-                      context,
-                      MaterialPageRoute(
-                        builder: (_) => const MenuPrincipalPage(),
-                      ),
+                    Navigator.of(context).pushNamedAndRemoveUntil(
+                      AppRoutes.menuPrincipal,
                       (route) => false,
                     );
                   },

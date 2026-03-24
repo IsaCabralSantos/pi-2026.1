@@ -2,8 +2,9 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 
-import 'envio_solicitacao.dart';
-import 'theme.dart';
+import '../../../../app/routes/app_routes.dart';
+import '../../../../core/theme/theme.dart';
+import '../../../../domain/models/inspection_request.dart';
 
 class AnaliseScanner extends StatelessWidget {
   final String imagePath;
@@ -106,26 +107,25 @@ class AnaliseScanner extends StatelessWidget {
                 style: ElevatedButton.styleFrom(
                   backgroundColor: primaryColor,
                   elevation: 6,
-                  shadowColor: blackColor.withOpacity(0.25),
+                  shadowColor: blackColor.withValues(alpha: 0.25),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(12),
                   ),
                 ),
                 onPressed: () {
-                  final now = DateTime.now();
-                  Navigator.of(context).push(
-                    MaterialPageRoute(
-                      builder: (_) => EnvioSolicitacaoPage(
-                        requestId: '#00001',
-                        dateTime: now,
-                        detectedFault: 'Trinca Térmica',
-                        confidence: '95%',
-                        possibleCause: 'Excesso de Calor',
-                        recommendedAdjustment: 'Reduzir pressão em 9%',
-                        sectionMachine: 'F1 - Máquina 23',
-                        imagePath: imagePath,
-                      ),
-                    ),
+                  final request = InspectionRequest(
+                    requestId: '#00001',
+                    dateTime: DateTime.now(),
+                    detectedFault: 'Trinca Térmica',
+                    confidence: '95%',
+                    possibleCause: 'Excesso de Calor',
+                    recommendedAdjustment: 'Reduzir pressão em 9%',
+                    sectionMachine: 'F1 - Máquina 23',
+                    imagePath: imagePath,
+                  );
+                  Navigator.of(context).pushNamed(
+                    AppRoutes.envioSolicitacao,
+                    arguments: request,
                   );
                 },
                 child: const Text(

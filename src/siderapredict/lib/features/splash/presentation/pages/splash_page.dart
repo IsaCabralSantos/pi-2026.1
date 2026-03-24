@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:siderapredict/ui/menu_principal.dart';
+
+import '../../../../app/routes/app_routes.dart';
+import '../../../../core/theme/theme.dart';
 
 class SplashPage extends StatefulWidget {
   const SplashPage({super.key});
@@ -18,9 +20,7 @@ class _SplashPageState extends State<SplashPage> {
   Future<void> _navigateToScanner() async {
     await Future.delayed(const Duration(milliseconds: 1500));
     if (!mounted) return;
-    Navigator.of(context).pushReplacement(
-      MaterialPageRoute(builder: (context) => const MenuPrincipalPage()),
-    );
+    Navigator.of(context).pushReplacementNamed(AppRoutes.menuPrincipal);
   }
 
   @override
@@ -33,7 +33,7 @@ class _SplashPageState extends State<SplashPage> {
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
             colors: [
-              Color(0xFFDE1212),
+              primaryColor,
               Color(0xFFFFFFFF),
             ],
             stops: [0.3, 0.8],
