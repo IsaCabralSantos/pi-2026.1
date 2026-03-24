@@ -23,6 +23,33 @@ class _SplashPageState extends State<SplashPage> {
     Navigator.of(context).pushReplacementNamed(AppRoutes.menuPrincipal);
   }
 
+  Widget _buildStyledLoader(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(top: 16.0),
+      child: Container(
+        width: 48,
+        height: 48,
+        decoration: BoxDecoration(
+          shape: BoxShape.circle,
+          color: primaryColor.withValues(alpha: 0.9),
+        ),
+        child: Center(
+          child: SizedBox(
+            width: 24,
+            height: 24,
+            child: CircularProgressIndicator(
+              strokeWidth: 2.0,
+              valueColor: AlwaysStoppedAnimation<Color>(
+                primaryColor,
+              ),
+              backgroundColor: Colors.white,
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -43,13 +70,15 @@ class _SplashPageState extends State<SplashPage> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              const Spacer(flex: 4),
+              const Spacer(flex: 5),
               Image.asset(
                 'assets/soufer.png',
                 width: 300,
                 fit: BoxFit.contain,
               ),
-              const Spacer(flex: 6),
+              const SizedBox(height: 64),
+              _buildStyledLoader(context),
+              const Spacer(flex: 5),
             ],
           ),
         ),
