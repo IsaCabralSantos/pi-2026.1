@@ -1,8 +1,9 @@
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 
-import 'analise_scanner.dart';
-import 'theme.dart';
+import '../../../../app/routes/app_pages.dart';
+import '../../../../app/routes/app_routes.dart';
+import '../../../../core/theme/theme.dart';
 
 class ScannerPage extends StatefulWidget {
   const ScannerPage({super.key});
@@ -41,10 +42,11 @@ class _ScannerPageState extends State<ScannerPage> {
     _initializeControllerFuture = _controller!.initialize().then((_) async {
       await _controller!.setFlashMode(_flashMode);
     });
+    if (!mounted) return;
     setState(() {});
   }
 
-  void _toggleFlash() async {
+  Future<void> _toggleFlash() async {
     if (_controller == null) return;
     _flashStep = (_flashStep + 1) % 4;
     FlashMode newMode;
@@ -64,6 +66,7 @@ class _ScannerPageState extends State<ScannerPage> {
         break;
     }
     await _controller!.setFlashMode(newMode);
+    if (!mounted) return;
     setState(() {
       _flashMode = newMode;
     });
@@ -177,7 +180,7 @@ class _ScannerPageState extends State<ScannerPage> {
                           style: ElevatedButton.styleFrom(
                             backgroundColor: primaryColor,
                             elevation: 6,
-                            shadowColor: blackColor.withOpacity(0.25),
+                            shadowColor: blackColor.withValues(alpha: 0.25),
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(12),
                             ),
@@ -189,12 +192,11 @@ class _ScannerPageState extends State<ScannerPage> {
                               }
                               if (_controller == null) return;
                               final picture = await _controller!.takePicture();
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => AnaliseScanner(
-                                    imagePath: picture.path,
-                                  ),
+                              if (!context.mounted) return;
+                              Navigator.of(context).pushNamed(
+                                AppRoutes.analiseScanner,
+                                arguments: AnaliseScannerArgs(
+                                  imagePath: picture.path,
                                 ),
                               );
                             } catch (e) {

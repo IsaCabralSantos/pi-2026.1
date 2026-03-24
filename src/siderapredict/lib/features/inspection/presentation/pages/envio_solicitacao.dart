@@ -1,33 +1,20 @@
 import 'dart:io';
-import 'dart:ui' as ui;
 
 import 'package:flutter/material.dart';
 
-import 'inspecao_enviada.dart';
-import 'theme.dart';
+import '../../../../app/routes/app_routes.dart';
+import '../../../../core/theme/theme.dart';
+import '../../../../core/widgets/zoomable_image_overlay.dart';
+import '../../../../domain/models/inspection_request.dart';
 
 const Color confirmGreen = Color(0xFF12A347);
 
 class EnvioSolicitacaoPage extends StatefulWidget {
-  final String requestId;
-  final DateTime dateTime;
-  final String detectedFault;
-  final String confidence;
-  final String possibleCause;
-  final String recommendedAdjustment;
-  final String sectionMachine;
-  final String imagePath;
+  final InspectionRequest request;
 
   const EnvioSolicitacaoPage({
     super.key,
-    required this.requestId,
-    required this.dateTime,
-    required this.detectedFault,
-    required this.confidence,
-    required this.possibleCause,
-    required this.recommendedAdjustment,
-    required this.sectionMachine,
-    required this.imagePath,
+    required this.request,
   });
 
   @override
@@ -52,16 +39,33 @@ class _EnvioSolicitacaoPageState extends State<EnvioSolicitacaoPage> {
   String? _selectedSection;
   String? _selectedMachine;
 
+  void _confirmAndNavigate() {
+    final sectionMachine = _selectedSection != null
+        ? '$_selectedSection - ${_selectedMachine ?? ''}'
+        : (_selectedMachine ?? '');
+    final updatedRequest = widget.request.copyWith(
+      possibleCause: _causeController.text,
+      recommendedAdjustment: _adjustController.text,
+      sectionMachine: sectionMachine,
+      observations: _obsController.text,
+    );
+
+    Navigator.of(context).pushReplacementNamed(
+      AppRoutes.inspecaoEnviada,
+      arguments: updatedRequest,
+    );
+  }
+
   @override
   void initState() {
     super.initState();
-    _causeController.text = widget.possibleCause;
-    _adjustController.text = widget.recommendedAdjustment;
-    _obsController.text = '';
+    _causeController.text = widget.request.possibleCause;
+    _adjustController.text = widget.request.recommendedAdjustment;
+    _obsController.text = widget.request.observations;
 
     // try to prefill section/machine if widget.sectionMachine contains ' - '
-    if (widget.sectionMachine.contains(' - ')) {
-      final parts = widget.sectionMachine.split(' - ');
+    if (widget.request.sectionMachine.contains(' - ')) {
+      final parts = widget.request.sectionMachine.split(' - ');
       _selectedSection = parts.first;
       _selectedMachine = parts.length > 1 ? parts.sublist(1).join(' - ') : null;
       // ensure machine exists in map
@@ -182,73 +186,6 @@ class _EnvioSolicitacaoPageState extends State<EnvioSolicitacaoPage> {
     );
   }
 
-  Widget _labeledDropdown<T>(
-    String label,
-    List<T> items,
-    T? value,
-    ValueChanged<T?> onChanged,
-  ) {
-    return Container(
-      margin: const EdgeInsets.symmetric(vertical: 6.0),
-      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-      decoration: BoxDecoration(
-        color: whiteColor,
-        borderRadius: BorderRadius.circular(12),
-        boxShadow: subtleShadows,
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            label,
-            style: const TextStyle(
-              fontWeight: FontWeight.bold,
-              color: darkTextColor,
-            ),
-          ),
-          const SizedBox(height: 4),
-          DropdownButtonHideUnderline(
-            child: DropdownButton<T>(
-              isExpanded: true,
-              value: value,
-              hint: Text(
-                'Selecione $label',
-                style: const TextStyle(
-                  color: darkTextColor,
-                  fontSize: 16,
-                  shadows: textShadows,
-                ),
-              ),
-              icon: const Icon(Icons.keyboard_arrow_down),
-              dropdownColor: whiteColor,
-              style: const TextStyle(
-                color: darkTextColor,
-                fontSize: 16,
-                shadows: textShadows,
-              ),
-              items: items
-                  .map(
-                    (it) => DropdownMenuItem<T>(
-                      value: it,
-                      child: Text(
-                        '$it',
-                        style: const TextStyle(
-                          color: darkTextColor,
-                          fontSize: 16,
-                          shadows: textShadows,
-                        ),
-                      ),
-                    ),
-                  )
-                  .toList(),
-              onChanged: onChanged,
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
   Widget _compactDropdown<T>(
     String label,
     List<T> items,
@@ -318,47 +255,10 @@ class _EnvioSolicitacaoPageState extends State<EnvioSolicitacaoPage> {
   }
 
   void _showImageOverlay(BuildContext context) {
-    if (widget.imagePath.isEmpty) return;
-    showGeneralDialog(
-      context: context,
-      barrierDismissible: true,
-      barrierLabel: 'Imagem',
-      pageBuilder: (ctx, a1, a2) {
-        return GestureDetector(
-          onTap: () => Navigator.of(ctx).pop(),
-          child: Material(
-            color: Colors.transparent,
-            child: Stack(
-              children: [
-                BackdropFilter(
-                  filter: ui.ImageFilter.blur(sigmaX: 6, sigmaY: 6),
-                  child: Container(color: Colors.black.withOpacity(0.4)),
-                ),
-                Center(
-                  child: GestureDetector(
-                    onTap: () => Navigator.of(ctx).pop(),
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.circular(12),
-                      child: Image.file(
-                        File(widget.imagePath),
-                        width: MediaQuery.of(ctx).size.width * 0.8,
-                        fit: BoxFit.contain,
-                      ),
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
-        );
-      },
-      transitionBuilder: (ctx, a1, a2, child) {
-        return FadeTransition(
-          opacity: CurvedAnimation(parent: a1, curve: Curves.easeOut),
-          child: child,
-        );
-      },
-      transitionDuration: const Duration(milliseconds: 200),
+    if (widget.request.imagePath.isEmpty) return;
+    ZoomableImageOverlay.show(
+      context,
+      imageProvider: FileImage(File(widget.request.imagePath)),
     );
   }
 
@@ -402,11 +302,11 @@ class _EnvioSolicitacaoPageState extends State<EnvioSolicitacaoPage> {
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
                   _infoCard(
-                    'Solicitação ${widget.requestId}',
-                    _formatDate(widget.dateTime),
+                    'Solicitação ${widget.request.requestId}',
+                    _formatDate(widget.request.dateTime),
                   ),
-                  _infoCard('Falha detectada', widget.detectedFault),
-                  _infoCard('Confiabilidade', widget.confidence),
+                  _infoCard('Falha detectada', widget.request.detectedFault),
+                  _infoCard('Confiabilidade', widget.request.confidence),
                   const SizedBox(height: 8),
                   Container(
                     height: imageHeightWhenKeyboard,
@@ -423,9 +323,9 @@ class _EnvioSolicitacaoPageState extends State<EnvioSolicitacaoPage> {
                         child: Stack(
                           fit: StackFit.expand,
                           children: [
-                            widget.imagePath.isNotEmpty
+                            widget.request.imagePath.isNotEmpty
                                 ? Image.file(
-                                    File(widget.imagePath),
+                                    File(widget.request.imagePath),
                                     fit: BoxFit.cover,
                                   )
                                 : const Center(child: Text('Nenhuma imagem')),
@@ -562,32 +462,13 @@ class _EnvioSolicitacaoPageState extends State<EnvioSolicitacaoPage> {
                       style: ElevatedButton.styleFrom(
                         backgroundColor: confirmGreen,
                         elevation: 6,
-                        shadowColor: blackColor.withOpacity(0.25),
+                        shadowColor: blackColor.withValues(alpha: 0.25),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(12),
                         ),
                       ),
                       onPressed: () {
-                        final sectionMachine = _selectedSection != null
-                            ? '$_selectedSection - ${_selectedMachine ?? ''}'
-                            : (_selectedMachine ?? '');
-
-                        Navigator.pushReplacement(
-                          context,
-                          MaterialPageRoute(
-                            builder: (_) => InspecaoEnviadaPage(
-                              requestId: widget.requestId,
-                              dateTime: widget.dateTime,
-                              detectedFault: widget.detectedFault,
-                              confidence: widget.confidence,
-                              possibleCause: _causeController.text,
-                              recommendedAdjustment: _adjustController.text,
-                              sectionMachine: sectionMachine,
-                              imagePath: widget.imagePath,
-                              observations: _obsController.text,
-                            ),
-                          ),
-                        );
+                        _confirmAndNavigate();
                       },
                       child: const Text(
                         'CONFIRMAR',
@@ -618,11 +499,14 @@ class _EnvioSolicitacaoPageState extends State<EnvioSolicitacaoPage> {
                     children: [
                       // Top info cards (take minimal space)
                       _infoCard(
-                        'Solicitação ${widget.requestId}',
-                        _formatDate(widget.dateTime),
+                        'Solicitação ${widget.request.requestId}',
+                        _formatDate(widget.request.dateTime),
                       ),
-                      _infoCard('Falha detectada', widget.detectedFault),
-                      _infoCard('Confiabilidade', widget.confidence),
+                      _infoCard(
+                        'Falha detectada',
+                        widget.request.detectedFault,
+                      ),
+                      _infoCard('Confiabilidade', widget.request.confidence),
 
                       // Compact image (square) - restored proportions
                       Expanded(
@@ -641,9 +525,9 @@ class _EnvioSolicitacaoPageState extends State<EnvioSolicitacaoPage> {
                               child: Stack(
                                 fit: StackFit.expand,
                                 children: [
-                                  widget.imagePath.isNotEmpty
+                                  widget.request.imagePath.isNotEmpty
                                       ? Image.file(
-                                          File(widget.imagePath),
+                                          File(widget.request.imagePath),
                                           fit: BoxFit.cover,
                                         )
                                       : const Center(
@@ -812,32 +696,13 @@ class _EnvioSolicitacaoPageState extends State<EnvioSolicitacaoPage> {
                           style: ElevatedButton.styleFrom(
                             backgroundColor: confirmGreen,
                             elevation: 6,
-                            shadowColor: blackColor.withOpacity(0.25),
+                            shadowColor: blackColor.withValues(alpha: 0.25),
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(12),
                             ),
                           ),
                           onPressed: () {
-                            final sectionMachine = _selectedSection != null
-                                ? '$_selectedSection - ${_selectedMachine ?? ''}'
-                                : (_selectedMachine ?? '');
-
-                            Navigator.pushReplacement(
-                              context,
-                              MaterialPageRoute(
-                                builder: (_) => InspecaoEnviadaPage(
-                                  requestId: widget.requestId,
-                                  dateTime: widget.dateTime,
-                                  detectedFault: widget.detectedFault,
-                                  confidence: widget.confidence,
-                                  possibleCause: _causeController.text,
-                                  recommendedAdjustment: _adjustController.text,
-                                  sectionMachine: sectionMachine,
-                                  imagePath: widget.imagePath,
-                                  observations: _obsController.text,
-                                ),
-                              ),
-                            );
+                            _confirmAndNavigate();
                           },
                           child: const Text(
                             'CONFIRMAR',
