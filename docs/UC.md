@@ -126,10 +126,13 @@
 ### Diagrama de atividades (PlantUML)
 ### Diagramas (imagens)
 
-- Diagrama de atividades: [docs/diagrams/UC01_activities.png](docs/diagrams/UC01_activities.png)  
-  https://github.com/joaoaugusto-dev/pi-2026.1/blob/main/docs/diagrams/UC01_activities.png
-- Diagrama de sequência: [docs/diagrams/UC01_sequence.png](docs/diagrams/UC01_sequence.png)  
-  https://github.com/joaoaugusto-dev/pi-2026.1/blob/main/docs/diagrams/UC01_sequence.png
+![Diagrama de atividades UC01](docs/diagrams/UC01_activities.png)
+
+docs/diagrams/UC01_activities.png — https://github.com/joaoaugusto-dev/pi-2026.1/blob/main/docs/diagrams/UC01_activities.png
+
+![Diagrama de sequência UC01](docs/diagrams/UC01_sequence.png)
+
+docs/diagrams/UC01_sequence.png — https://github.com/joaoaugusto-dev/pi-2026.1/blob/main/docs/diagrams/UC01_sequence.png
 
 ## Caso Principal 2 — Analise de Nao Conformidade (UC02)
 
@@ -146,10 +149,13 @@
 ### Diagrama de atividades (PlantUML)
 ### Diagramas (imagens)
 
-- Diagrama de atividades: [docs/diagrams/UC02_activities.png](docs/diagrams/UC02_activities.png)  
-  https://github.com/joaoaugusto-dev/pi-2026.1/blob/main/docs/diagrams/UC02_activities.png
-- Diagrama de sequência: [docs/diagrams/UC02_sequence.png](docs/diagrams/UC02_sequence.png)  
-  https://github.com/joaoaugusto-dev/pi-2026.1/blob/main/docs/diagrams/UC02_sequence.png
+![Diagrama de atividades UC02](docs/diagrams/UC02_activities.png)
+
+docs/diagrams/UC02_activities.png — https://github.com/joaoaugusto-dev/pi-2026.1/blob/main/docs/diagrams/UC02_activities.png
+
+![Diagrama de sequência UC02](docs/diagrams/UC02_sequence.png)
+
+docs/diagrams/UC02_sequence.png — https://github.com/joaoaugusto-dev/pi-2026.1/blob/main/docs/diagrams/UC02_sequence.png
 
 ## Caso Principal 3 — Geração de Relatórios de Qualidade (UC04)
 
@@ -165,9 +171,12 @@
 ### Diagrama de atividades (PlantUML)
 ### Diagramas (imagens)
 
-- Diagrama de atividades: [docs/diagrams/UC04_activities.png](docs/diagrams/UC04_activities.png)  
-  https://github.com/joaoaugusto-dev/pi-2026.1/blob/main/docs/diagrams/UC04_activities.png
-- Diagrama de sequência: [docs/diagrams/UC04_sequence.png](docs/diagrams/UC04_sequence.png)  
-  https://github.com/joaoaugusto-dev/pi-2026.1/blob/main/docs/diagrams/UC04_sequence.png
+![Diagrama de atividades UC04](docs/diagrams/UC04_activities.png)
+
+docs/diagrams/UC04_activities.png — https://github.com/joaoaugusto-dev/pi-2026.1/blob/main/docs/diagrams/UC04_activities.png
+
+![Diagrama de sequência UC04](docs/diagrams/UC04_sequence.png)
+
+docs/diagrams/UC04_sequence.png — https://github.com/joaoaugusto-dev/pi-2026.1/blob/main/docs/diagrams/UC04_sequence.png
 
 ---
