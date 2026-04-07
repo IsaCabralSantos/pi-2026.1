@@ -1,80 +1,100 @@
-### Épico 1: Inspeção Edge em Tempo Real
 
-*Focado na captura instantânea e no feedback visual rápido no chão de fábrica*
-
-* **US01 - Acesso Sem Atrito:**
-* **Como** inspetor de qualidade,
-* **Quero** abrir o aplicativo e acessar a tela de menu instantaneamente sem precisar fazer login,
-* **Para que** eu possa iniciar as inspeções sem perder tempo com autenticações.
-
-
-* **US02 - Assistente de Enquadramento:**
-* **Como** inspetor de qualidade,
-* **Quero** visualizar guias na tela,
-* **Para que** eu consiga o ângulo e o alinhamento perfeitos da peça antes da captura.
-
-
-* **US03 - Inferência Local (TFLite):**
-* **Como** inspetor de qualidade,
-* **Quero** que a foto capturada seja analisada imediatamente pelo modelo de IA preditiva embarcado no celular,
-* **Para que** eu tenha uma resposta em segundos.
-
-
-* **US04 - Feedback Visual em Cores:**
-* **Como** inspetor de qualidade,
-* **Quero** ver o resultado da leitura em cores vibrantes (Verde, Vermelho ou Laranja),
-* **Para que** eu saiba bater o olho e decidir o destino da peça instantaneamente.
-
-
+# Backlog do Produto — SIDERA PREDICT
 
 ---
 
-### Épico 2: Inteligência e Diagnóstico Avançado
+## Épico 1: Inspeção Dimensional Automatizada
+**Contexto:** Automatizar a inspeção de peças metálicas, reduzindo erros dimensionais e aumentando a confiabilidade do processo.
 
-*Focado no detalhamento das anomalias e na geração de dados utilizando Inteligência Artificial Generativa.*
+- **US01 — Acesso Rápido ao Sistema**
+  - Como operador, desejo acessar o sistema sem burocracia para não atrasar a produção.
+  - Critério: O app deve abrir e estar pronto para uso em até 3 segundos.
 
-* **US05 - Raio-X da Peça:**
-* **Como** inspetor de qualidade,
-* **Quero** abrir uma tela de detalhamento das peças reprovadas mostrando as marcações da anomalia e a porcentagem de confiabilidade da IA,
-* **Para que** eu entenda com clareza o motivo exato da reprovação.
+- **US02 — Seleção da Peça (OP/Código)**
+  - Como operador, desejo selecionar a peça por OP ou código para garantir que a inspeção será feita no modelo correto.
+  - Critério: Busca automática do CAD correspondente.
 
+- **US03 — Captura Guiada (Perfil Lateral)**
+  - Como operador, desejo ser orientado sobre o ângulo ideal de captura para garantir medições precisas.
+  - Critério: Sistema sugere ângulo e valida qualidade da imagem.
 
-* **US06 - Laudo Técnico Automatizado (Gemini):**
-* **Como** inspetor de qualidade,
-* **Quero** que o sistema gere automaticamente uma descrição técnica do defeito detectado,
-* **Para que** eu não precise digitar textos longos e repetitivos no celular durante o turno.
+- **US04 — Medição por Visão Computacional**
+  - Como sistema, desejo extrair medidas reais da peça a partir da imagem capturada.
+  - Critério: Medidas extraídas devem ser compatíveis com o CAD.
 
+- **US05 — Comparação Automática com CAD**
+  - Como sistema, desejo comparar as medidas reais com as do CAD para identificar conformidade.
+  - Critério: Diferenças e desvios destacados.
 
-* **US07 - Prescrição de Ajustes:**
-* **Como** inspetor de qualidade,
-* **Quero** receber recomendações imediatas de ajustes de maquinário geradas pela IA (ex: "Reduzir pressão em 5%"),
-* **Para que** eu possa orientar a operação a corrigir o desvio antes que mais peças saiam defeituosas.
+- **US06 — Validação com Tolerância Técnica**
+  - Como sistema, desejo validar as medidas com base em tolerâncias normatizadas.
+  - Critério: Tolerâncias parametrizáveis conforme norma.
 
-
+- **US07 — Feedback Imediato (OK/NOK)**
+  - Como operador, desejo receber o resultado da inspeção imediatamente para separar peças não conformes.
+  - Critério: Feedback visual (verde/vermelho) em até 2 segundos.
 
 ---
 
-### Épico 3: Gestão, KPIs e Comunicação
+## Épico 2: Integração com Engenharia (CAD)
+**Contexto:** Garantir que a inspeção utilize sempre o modelo CAD mais atualizado e correto.
 
-*Focado na transformação dos dados coletados em ações de manutenção e indicadores de qualidade.*
+- **US08 — Leitura de Arquivos CAD (DXF/DWG)**
+  - Como sistema, desejo ler arquivos CAD para obter as dimensões de referência.
+  - Critério: Suporte a formatos DXF e DWG.
 
-* **US08 - Emissão Simplificada de OS:**
-* **Como** inspetor de qualidade,
-* **Quero** gerar uma Ordem de Serviço (OS) com apenas um clique a partir de uma anomalia confirmada,
-* **Para que** o processo de acionamento da manutenção seja padronizado e rápido.
+- **US09 — Extração Automática de Dimensões**
+  - Como sistema, desejo extrair automaticamente todas as dimensões relevantes do CAD.
+  - Critério: Base, abas, ângulos, furos, etc.
 
+- **US10 — Sincronização com Servidor Interno**
+  - Como sistema, desejo sincronizar os arquivos CAD com o servidor da engenharia.
+  - Critério: Sempre utilizar a versão mais recente.
 
-* **US09 - Disparo de Alertas e Laudos:**
-* **Como** inspetor de qualidade,
-* **Quero** enviar a OS e o laudo técnico por e-mail para a equipe de manutenção de forma automática,
-* **Para que** eles recebam todas as informações estruturadas sem que eu precise redigir mensagens manuais.
+- **US11 — Identificação Automática da Peça Correta**
+  - Como sistema, desejo identificar automaticamente o modelo correto a partir do código/OP.
+  - Critério: Eliminar risco de inspeção com modelo desatualizado.
 
+---
 
-* **US10 - Dashboard de Indicadores:**
-* **Como** inspetor de qualidade (ou gestor),
-* **Quero** visualizar um painel com gráficos de volume de inspeções, máquinas com mais gargalos e latência da IA,
-* **Para que** nós possamos monitorar a saúde da linha de produção e a eficiência do próprio aplicativo.
+## Épico 3: Inspeção Inteligente Assistida
+**Contexto:** Aumentar a precisão e a facilidade de uso, reduzindo erros humanos.
 
+- **US12 — Sugestão de Ângulos de Captura**
+  - Como sistema, desejo sugerir ângulos ideais para captura de imagem.
+  - Critério: Orientação visual e textual.
 
+- **US13 — Multi-visão (Frente + Lateral)**
+  - Como sistema, desejo permitir inspeção por múltiplos ângulos quando necessário.
+  - Critério: Sistema solicita imagens adicionais se o perfil exigir.
+
+- **US14 — Detecção de Erros Comuns**
+  - Como sistema, desejo identificar automaticamente erros como:
+    - Dobra errada
+    - Dobra invertida
+    - Ângulo fora da especificação
+    - Aba fora de medida
+  - Critério: Destacar visualmente o tipo de erro.
+
+---
+
+## Épico 4: Registro e Rastreabilidade
+**Contexto:** Garantir rastreabilidade total e geração de indicadores para melhoria contínua.
+
+- **US15 — Registro Automático da Inspeção**
+  - Como sistema, desejo registrar automaticamente todos os dados da inspeção.
+  - Critério: Dados salvos sem intervenção manual.
+
+- **US16 — Identificação de Máquina e Operador**
+  - Como sistema, desejo associar cada inspeção à máquina e ao operador responsável.
+  - Critério: Rastreabilidade completa.
+
+- **US17 — Histórico por Lote**
+  - Como gestor, desejo consultar o histórico de inspeções por lote de produção.
+  - Critério: Filtros por data, peça, máquina, operador.
+
+- **US18 — Relatórios Automáticos**
+  - Como gestor, desejo gerar relatórios estatísticos e gerenciais automaticamente.
+  - Critério: Exportação em PDF/Excel, gráficos e indicadores.
 
 ---

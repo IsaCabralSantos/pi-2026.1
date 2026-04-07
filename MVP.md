@@ -1,25 +1,45 @@
-# MVP — Produto Mínimo Viável
+## 🎯 Objetivo do MVP
 
-Aqui descrevemos o escopo mínimo necessário para validar o sistema SIDERA PREDICT com usuários reais.
+Validar a inspeção dimensional automática em ambiente real.
 
-## Funcionalidades Essenciais
-- Inspeção visual de peças com veredito instantâneo (Aprovado, Anomalia, Falha de Leitura)
-- Interface de câmera com guias visuais
-- Processamento local da imagem via IA (TFLite)
-- Exibição de feedback visual (cores)
-- Geração automática de laudo técnico via IA generativa (Google Gemini)
-- Dashboard simples com KPIs principais
-- Disparo de ordem de serviço e comunicação por e-mail
+---
 
-## Casos de Uso do MVP
-- UC01 — Realizar Inspeção de Peça (SCAN)
-- UC02 — Analisar Anomalia e Gerar Laudo
-- UC03 — Emitir Ordem de Serviço e Notificar Equipe
-- UC04 — Acompanhar Dashboard de KPIs
+## ✅ Funcionalidades Essenciais
 
-## Requisitos Funcionais do MVP
-- RF01 a RF04: Inspeção, câmera, análise, feedback visual
-- RF05 a RF07: Detalhamento, laudo IA, recomendações
-- RF08: Dashboard de KPIs
-- RF09: Geração de Ordem de Serviço
-- RF10: Disparo de Comunicação (E-Mail)
+- Captura da peça via câmera
+- Seleção da peça (código/OP)
+- Leitura de desenho CAD
+- Extração de medidas (ângulo, abas, base)
+- Comparação com modelo
+- Validação com tolerância
+- Feedback visual (OK / NOK)
+- Registro da inspeção
+
+---
+
+## 📌 Casos de Uso do MVP
+
+- UC01 — Inspecionar Peça (Dimensional)
+- UC02 — Analisar Não Conformidade
+- UC03 — Registrar Inspeção
+- UC04 — Visualizar Indicadores
+
+---
+
+## 📌 Requisitos Funcionais do MVP
+
+- RF01 a RF04: Acesso, seleção e leitura do CAD
+- RF05 a RF08: Captura, medição e comparação
+- RF09: Validação com tolerância
+- RF10: Feedback visual
+- RF12: Registro automático
+
+---
+
+## ⚠️ Observação Importante
+
+O foco do projeto está nas **máquinas de dobra menores**, onde ocorre a maior incidência de erros dimensionais (≃80%).
+
+Essa decisão é baseada em **dados reais da operação industrial**, garantindo maior impacto e viabilidade.
+
+---
