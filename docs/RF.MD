@@ -1,13 +1,56 @@
 
-## Requisitos Funcionais (RF)
+# Requisitos Funcionais — SIDERA PREDICT
 
-* **RF01 - Acesso Direto:** O aplicativo deve permitir o acesso imediato à tela principal de inspeção sem a necessidade de autenticação (login/senha).
-* **RF02 - Câmera com Guias Visuais:** O sistema deve disponibilizar uma interface de câmera integrada com o enquadramento correto da peça.
-* **RF03 - Captura e Análise de Imagem:** O aplicativo deve capturar a foto da peça e enviá-la instantaneamente para análise do modelo de Inteligência Artificial (Preditiva) embarcado.
-* **RF04 - Feedback Visual de Status:** O sistema deve exibir o resultado da inspeção em tempo real utilizando um padrão de cores: Verde (Aprovado), Vermelho (Anomalia Detectada) e Laranja (Falha de Leitura).
-* **RF05 - Raio-X da Inspeção:** O aplicativo deve apresentar uma tela de detalhamento para peças reprovadas, destacando os pontos exatos da anomalia na imagem e o grau de confiabilidade (percentual) da IA.
-* **RF06 - Geração de Laudos via IA Generativa:** O sistema deve integrar-se ao Google Gemini para redigir automaticamente descrições técnicas detalhando a causa provável do defeito encontrado.
-* **RF07 - Recomendações de Ajuste:** O aplicativo deve fornecer sugestões imediatas de ajuste de maquinário (ex: "Reduzir pressão em 5%") geradas pela IA (Generativa).
-* **RF08 - Dashboard de KPIs:** O sistema deve possuir um painel gerencial contendo gráficos interativos com: volume total de inspeções, ranking de máquinas com maior índice de falhas/gargalos e a latência de resposta do modelo (exemplos).
-* **RF09 - Geração de Ordem de Serviço (OS):** O aplicativo deve permitir a criação simplificada de ordens de serviço a partir de uma anomalia detectada.
-* **RF10 - Disparo de Comunicação:** O sistema deve enviar e-mails pré-formatados para a equipe de manutenção com apenas um clique, anexando o laudo e a OS.
+---
+
+**RF01 — Acesso Imediato**
+O sistema deve permitir acesso imediato ao aplicativo, sem necessidade de login, para não impactar o ritmo da produção.
+Critério: O tempo de inicialização não deve exceder 3 segundos.
+
+**RF02 — Seleção de Peça**
+O sistema deve permitir a seleção da peça a ser inspecionada por código ou OP (ordem de produção).
+Critério: Busca automática do arquivo CAD correspondente.
+
+**RF03 — Acesso ao CAD**
+O sistema deve acessar automaticamente o arquivo CAD da peça selecionada, garantindo que a inspeção utilize o modelo correto.
+Critério: Suporte a formatos DXF e DWG.
+
+**RF04 — Extração de Dimensões do CAD**
+O sistema deve extrair automaticamente todas as dimensões relevantes do CAD (abas, ângulos, base, furos, etc.).
+Critério: Extração sem intervenção manual.
+
+**RF05 — Captura de Imagem da Peça**
+O sistema deve capturar imagem da peça (perfil lateral e/ou frontal) via câmera do dispositivo.
+Critério: Orientação visual para ângulo ideal de captura.
+
+**RF06 — Medição Dimensional por Visão Computacional**
+O sistema deve calcular as medidas reais da peça a partir da imagem capturada, utilizando referência de escala.
+Critério: Precisão compatível com tolerância técnica.
+
+**RF07 — Comparação Automática com CAD**
+O sistema deve comparar as medidas reais extraídas com as dimensões do CAD.
+Critério: Destacar diferenças e desvios.
+
+**RF08 — Validação com Tolerância Técnica**
+O sistema deve validar as medidas com base em tolerâncias técnicas normatizadas.
+Critério: Tolerâncias parametrizáveis conforme norma.
+
+**RF09 — Retorno Imediato de Resultado**
+O sistema deve retornar imediatamente o resultado da inspeção:
+  - Conforme (OK)
+  - Não conforme (NOK)
+Critério: Feedback visual (verde/vermelho) em até 2 segundos.
+
+**RF10 — Indicação de Dimensão Não Conforme**
+O sistema deve indicar qual(is) dimensão(ões) está(ão) fora da tolerância.
+Critério: Destacar visualmente o erro.
+
+**RF11 — Inspeção Multi-ângulo**
+O sistema deve permitir inspeção por múltiplos ângulos quando necessário.
+Critério: Solicitar imagens adicionais se o perfil exigir.
+
+**RF12 — Registro Automático dos Resultados**
+O sistema deve registrar automaticamente todos os resultados de inspeção, associando peça, máquina, operador, data/hora e resultado.
+Critério: Dados salvos sem intervenção manual.
+
+---

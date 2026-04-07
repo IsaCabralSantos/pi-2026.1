@@ -1,0 +1,19 @@
+@startuml
+title UC02 - Analise de Nao Conformidade (Sequencia)
+
+participant INS as "Motor de Inspecao"
+participant APP as "Aplicativo"
+actor IQ as "Inspetor de Qualidade"
+participant NC as "Modulo Nao Conformidade"
+participant HIST as "Historico"
+
+INS -> APP : Resultado NOK + medidas
+APP -> NC : Solicitar analise detalhada
+NC -> NC : Calcular desvios e classificar erros
+NC --> APP : Diagnostico completo
+IQ -> APP : Informar observacoes e causa provavel
+APP -> HIST : Persistir registro de nao conformidade
+HIST --> APP : Confirmacao
+APP --> IQ : Confirmar registro e destino da peca
+
+@enduml
