@@ -1,4 +1,3 @@
-
 # Casos de Uso — Sistema de Inspeção Dimensional
 
 ---
@@ -125,10 +124,12 @@
 16. Sistema exibe feedback final em tempo real para o operador.
 
 ### Diagrama de atividades (PlantUML)
-### Diagramas (PlantUML)
+### Diagramas (imagens)
 
-- Diagrama de atividades: [docs/diagrams/UC01_activities.puml](docs/diagrams/UC01_activities.puml)
-- Diagrama de sequência: [docs/diagrams/UC01_sequence.puml](docs/diagrams/UC01_sequence.puml)
+- Diagrama de atividades: [docs/diagrams/UC01_activities.png](docs/diagrams/UC01_activities.png)  
+  https://github.com/joaoaugusto-dev/pi-2026.1/blob/main/docs/diagrams/UC01_activities.png
+- Diagrama de sequência: [docs/diagrams/UC01_sequence.png](docs/diagrams/UC01_sequence.png)  
+  https://github.com/joaoaugusto-dev/pi-2026.1/blob/main/docs/diagrams/UC01_sequence.png
 
 ## Caso Principal 2 — Analise de Nao Conformidade (UC02)
 
@@ -143,10 +144,12 @@
 8. Sistema salva ocorrência para rastreabilidade e relatório.
 
 ### Diagrama de atividades (PlantUML)
-### Diagramas (PlantUML)
+### Diagramas (imagens)
 
-- Diagrama de atividades: [docs/diagrams/UC02_activities.puml](docs/diagrams/UC02_activities.puml)
-- Diagrama de sequência: [docs/diagrams/UC02_sequence.puml](docs/diagrams/UC02_sequence.puml)
+- Diagrama de atividades: [docs/diagrams/UC02_activities.png](docs/diagrams/UC02_activities.png)  
+  https://github.com/joaoaugusto-dev/pi-2026.1/blob/main/docs/diagrams/UC02_activities.png
+- Diagrama de sequência: [docs/diagrams/UC02_sequence.png](docs/diagrams/UC02_sequence.png)  
+  https://github.com/joaoaugusto-dev/pi-2026.1/blob/main/docs/diagrams/UC02_sequence.png
 
 ## Caso Principal 3 — Geração de Relatórios de Qualidade (UC04)
 
@@ -160,9 +163,11 @@
 7. Sistema gera artefato final (PDF/impressão) e registra emissão.
 
 ### Diagrama de atividades (PlantUML)
-### Diagramas (PlantUML)
+### Diagramas (imagens)
 
-- Diagrama de atividades: [docs/diagrams/UC04_activities.puml](docs/diagrams/UC04_activities.puml)
-- Diagrama de sequência: [docs/diagrams/UC04_sequence.puml](docs/diagrams/UC04_sequence.puml)
+- Diagrama de atividades: [docs/diagrams/UC04_activities.png](docs/diagrams/UC04_activities.png)  
+  https://github.com/joaoaugusto-dev/pi-2026.1/blob/main/docs/diagrams/UC04_activities.png
+- Diagrama de sequência: [docs/diagrams/UC04_sequence.png](docs/diagrams/UC04_sequence.png)  
+  https://github.com/joaoaugusto-dev/pi-2026.1/blob/main/docs/diagrams/UC04_sequence.png
 
 ---
